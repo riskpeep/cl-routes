@@ -38,7 +38,7 @@
 
 (defun parse-path (str &optional varspecs)
   (flet ((mkvar (name &optional wildcard)
-           (let* ((spec (intern (string-upcase name) :keyword))
+           (let* ((spec (intern name :keyword))
                   (parse-fun (getf varspecs spec )))
              (if parse-fun
                  (make-instance (if wildcard
@@ -53,7 +53,7 @@
     (if (> (length str) 0)
         (if (char= (char str 0)
                    #\*)
-            (list (mkvar (intern (string-upcase (subseq str 1)) :keyword) t))
+            (list (mkvar (intern (subseq str 1) :keyword) t))
             (let ((pos (position #\: str)))
               (if pos
                   (let ((rest (if (char= (elt str (1+ pos)) #\()
